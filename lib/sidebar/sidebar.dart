@@ -180,7 +180,7 @@ class _SideBarState extends State<SideBar>
                             title: "Add New News",
                             onTap: (){
                               onIconPressed();
-                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyDonationClickedEvent);
+                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.AddNewNewsClickedEvent);
                             },
                           ),
                           MenuItem(

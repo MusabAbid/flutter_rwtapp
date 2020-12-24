@@ -21,7 +21,7 @@ class AdaptiveFlatButton extends StatelessWidget {
           onTap: handler,
           child: Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
+              color: Color.fromRGBO(39, 99, 209, 10),
               borderRadius: BorderRadius.circular(5),
 
             ),

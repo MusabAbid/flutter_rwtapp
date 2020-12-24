@@ -100,7 +100,7 @@ class _NewCampaignState extends State<NewCampaign> {
           ),
         ],
         backgroundColor: Colors.green,
-        title: Center(child: Text('New Campaign')),
+        title: Center(child: Text('Add Campaign')),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -268,7 +268,7 @@ class _NewCampaignState extends State<NewCampaign> {
                             padding: const EdgeInsets.only(top: 5.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
+                                color: Color.fromRGBO(39, 99, 209, 10),
                                 borderRadius: BorderRadius.circular(5),
 
                               ),
