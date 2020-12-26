@@ -233,17 +233,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               .push(MaterialPageRoute(builder: (context) => SideBarLayout()));
                         },
                         child: Container(
+                          width: double.infinity,
                           decoration: BoxDecoration(
                             color:Color.fromRGBO(39, 99, 209,10),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 90,vertical: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 8),
                             child: Text('Login',style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
-                            ),),
+
+                            ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                       ),
