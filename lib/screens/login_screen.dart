@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rwtapp/sidebar/sidebar_layout.dart';
 import 'package:flutter_rwtapp/utilities/constants.dart';
-
+import 'package:flutter_rwtapp/screens/signup_screen.dart';
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -109,7 +109,26 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
   }
-
+  Widget _buildSignUpBtn() {
+    return Container(
+      alignment: Alignment.center,
+      child: GestureDetector(
+        onTap: (){
+          Navigator.of(context)
+              .pushReplacement(MaterialPageRoute(builder: (context) => SignUp()));
+        },
+        child: Text(
+          "New Here? SignUp Now",
+          style: TextStyle(
+            fontSize: 13,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+      ),
+    );
+  }
   Widget _buildForgetPasswordBtn() {
     return Container(
       alignment: Alignment.center,
@@ -211,9 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       forget ? Container() : _buildPasswordTF(),
                       _buildForgetPasswordBtn(),
-                      SizedBox(
-                        height: 5.0,
-                      ),
+
                       forget?Container(
                         decoration: BoxDecoration(
                             color:Color.fromRGBO(39, 99, 209,10),
@@ -251,6 +268,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
+                      SizedBox(height: 5,),
+                      _buildSignUpBtn(),
                     ],
                   ),
                 ),

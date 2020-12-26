@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rwtapp/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rwtapp/sidebar/sidebar_layout.dart';
 import 'package:flutter_rwtapp/utilities/constants.dart';
-
-class MemberRegistration extends StatefulWidget with NavigationStates {
+import 'package:flutter_rwtapp/screens/login_screen.dart';
+class SignUp extends StatefulWidget {
   @override
-  _MemberRegistrationState createState() => _MemberRegistrationState();
+  _SignUpState createState() => _SignUpState();
 }
-
 Widget _buildUserNameTF(bool forget) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,13 +23,14 @@ Widget _buildUserNameTF(bool forget) {
         alignment: Alignment.centerLeft,
         decoration: kBoxDecorationStyle,
         height: 45.0,
-        child: TextField(
+        child:TextField(
           keyboardType: TextInputType.emailAddress,
           style: TextStyle(
             color: Colors.black,
             fontFamily: "OpenSans",
           ),
           decoration: InputDecoration(
+
             border: InputBorder.none,
             contentPadding: EdgeInsets.only(top: 10.0),
             prefixIcon: Icon(
@@ -46,7 +45,6 @@ Widget _buildUserNameTF(bool forget) {
     ],
   );
 }
-
 Widget _buildEmailTF() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +60,7 @@ Widget _buildEmailTF() {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 45.0,
-          child: TextField(
+          child:TextField(
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.black,
@@ -75,17 +73,36 @@ Widget _buildEmailTF() {
                 Icons.mail,
                 color: Color.fromRGBO(39, 99, 209, 10),
               ),
-              hintText: "Enter your Email",
+              hintText: "Enter Email",
               hintStyle: kHintTextStyle,
             ),
-          )),
+          )
+      ),
     ],
   );
 }
-
-class _MemberRegistrationState extends State<MemberRegistration> {
+class _SignUpState extends State<SignUp> {
   bool forget = false;
-
+  Widget _buildLogInBtn() {
+    return Container(
+      alignment: Alignment.center,
+      child: GestureDetector(
+        onTap: (){
+          Navigator.of(context)
+              .pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
+        },
+        child: Text(
+          "Back to LogIn",
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
+        ),
+      ),
+    );
+  }
   Widget _buildPasswordTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,7 +131,7 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                 Icons.lock,
                 color: Color.fromRGBO(39, 99, 209, 10),
               ),
-              hintText: "Enter your Password",
+              hintText: "Enter Password",
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -183,42 +200,39 @@ class _MemberRegistrationState extends State<MemberRegistration> {
   //   );
   // }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.green,
-          automaticallyImplyLeading: false,
-          title: Center(child: Text('Register Member')),
-        ),
-        body: Container(
-          height: double.infinity,
-          child: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical:50.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  // Text(
-                  //   'Register New Member',
-                  //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  // ),
-                  Card(child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(children: [
-                      SizedBox(
-                        height: 5.0,
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/logos/backg.png"),
+                      fit: BoxFit.cover),
+                ),
+              ),
+              Container(
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 60.0,
+                    vertical: 120.0,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        radius: 90.0,
+                        child: Image.asset('assets/logos/logo.png'),
                       ),
-                      Text(
-                        'Member Detail',
-                          style: TextStyle(
-
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
                       SizedBox(
-                        height: 10.0,
+                        height: 30.0,
                       ),
                       _buildUserNameTF(forget),
                       SizedBox(
@@ -231,39 +245,54 @@ class _MemberRegistrationState extends State<MemberRegistration> {
                       _buildPasswordTF(),
                       SizedBox(
                         height: 20.0,
-                      ),],),
-                  )),
-                  GestureDetector(
-                          onTap: () {
-                          },
+                      ),
+                      forget?Container(
+                        decoration: BoxDecoration(
+                          color:Color.fromRGBO(39, 99, 209,10),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 45,vertical: 8),
+                          child: Text('Send Request',style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),),
+                        ),
+                      ):GestureDetector(
+                        onTap: (){
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) => SideBarLayout()));
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color:Color.fromRGBO(39, 99, 209,10),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Color.fromRGBO(39, 99, 209, 10),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 0, vertical: 8),
-                                child: Text(
-                                  'Register Member',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
+                            padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 8),
+                            child: Text('SignUp',style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         ),
-                ],
+                      ),
+                      SizedBox(height: 5,),
+                      _buildLogInBtn(),
+                    ],
+
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

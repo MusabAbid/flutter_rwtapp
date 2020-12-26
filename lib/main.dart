@@ -10,8 +10,6 @@ class MyApp extends StatelessWidget {
       title: 'RWT Login UI',
       debugShowCheckedModeBanner:false,
       home:MyHomePage(),
-
-
     );
   }
 }
