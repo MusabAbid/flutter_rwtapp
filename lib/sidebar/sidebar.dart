@@ -196,7 +196,7 @@ class _SideBarState extends State<SideBar>
                             title: "Payment History",
                             onTap: (){
                               onIconPressed();
-                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyDonationClickedEvent);
+                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.PaymentHistoryClickedEvent);
                             },
                           ),
                           MenuItem(

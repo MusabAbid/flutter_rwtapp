@@ -6,6 +6,7 @@ import 'package:flutter_rwtapp/pages/rulesRegulations.dart';
 import 'package:flutter_rwtapp/screens/Home.dart';
 import 'package:flutter_rwtapp/pages/add_new_campaign.dart';
 import 'package:flutter_rwtapp/pages/add_new_news.dart';
+import 'package:flutter_rwtapp/pages/paymentHistory.dart';
 
 
 enum NavigationEvents {
@@ -16,6 +17,7 @@ enum NavigationEvents {
   MyDonationClickedEvent,
   AddNewCampaignClickedEvent,
   AddNewNewsClickedEvent,
+  PaymentHistoryClickedEvent,
 
 }
 
@@ -48,6 +50,9 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
         break;
       case NavigationEvents.AddNewNewsClickedEvent:
         yield NewNews();
+        break;
+      case NavigationEvents.PaymentHistoryClickedEvent:
+        yield PaymentHistoryPage();
         break;
 
 
