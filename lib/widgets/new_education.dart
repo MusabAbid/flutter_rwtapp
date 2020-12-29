@@ -51,14 +51,16 @@ class _NewEducationState extends State<NewEducation> {
   //   );
   // }
   void _submitData() {
+    final status=dropdownValue;
+    if(status=='Completed'){
+
+      final enteredTitle = _degreeTitleController.text;
+      final enteredInstitute = _instituteController.text;
+      final enteredMarks = double.parse(_marksController.text);
+      final enteredGpa = double.parse(_gpaController.text);
     if (_instituteController.text.isEmpty||_degreeTitleController.text.isEmpty) {
       return;
     }
-    final enteredTitle = _degreeTitleController.text;
-    final enteredInstitute = _instituteController.text;
-    final enteredMarks = double.parse(_marksController.text);
-    final enteredGpa = double.parse(_gpaController.text);
-    final status=dropdownValue;
     if (enteredInstitute.isEmpty ||enteredTitle.isEmpty || enteredMarks <= 0 || enteredGpa <= 0|| _selectedEndDate == null|| _selectedStartDate == null||status=='Select Status') {
       return;
     }
@@ -71,13 +73,33 @@ class _NewEducationState extends State<NewEducation> {
       enteredInstitute,
       status
     );
+  }
+    else{
+      final enteredTitle = _degreeTitleController.text;
+      final enteredInstitute = _instituteController.text;
+      if (_instituteController.text.isEmpty||_degreeTitleController.text.isEmpty) {
+        return;
+      }
+      if(_selectedStartDate == null||status=='Select Status'|| _selectedStartDate == null){
+        return;
+      }
+      widget.addTx(
+          enteredTitle,
+          1.0,
+          _selectedStartDate,
+          _selectedStartDate,
+          1.0,
+          enteredInstitute,
+          status
+      );
+    }
     Navigator.of(context).pop();
   }
   void _startDatePicker() {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2019),
+      firstDate: DateTime(1950),
       lastDate: DateTime.now(),
     ).then((pickedDate) {
       if (pickedDate == null) {
@@ -93,8 +115,8 @@ class _NewEducationState extends State<NewEducation> {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2019),
-      lastDate: DateTime(2050),
+      firstDate: DateTime(1950),
+      lastDate: DateTime.now(),
     ).then((pickedDate) {
       if (pickedDate == null) {
         return;

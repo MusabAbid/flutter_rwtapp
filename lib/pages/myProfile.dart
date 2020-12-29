@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rwtapp/bloc/navigation_bloc/navigation_bloc.dart';
-import 'package:flutter_rwtapp/widgets/adaptive_flat_button.dart';
+import 'package:flutter_rwtapp/widgets/education_list.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_rwtapp/models/Education_model.dart';
 import 'package:flutter_rwtapp/widgets/new_education.dart';
@@ -24,6 +24,7 @@ class _MyProfileState extends State<MyProfile>
 
 
   final List<Education> _userTransaction = [
+    Education(id: DateTime.now().toString(),degreeTitle: 'Matric',startDate:DateTime.now() ,endDate:DateTime.now() ,status:'Completed' ,marks:600 ,instituteName:'Superior College Arifwala' ,gpa: 3),
 
   ];
   void _startAddNewTransactions(BuildContext ctx) {
@@ -50,6 +51,10 @@ class _MyProfileState extends State<MyProfile>
       startDate:startDate ,
       status: status,
     );
+    print(startDate);
+    print(endDate);
+    print('Added Successfully');
+    print(newtx);
     setState(() {
       _userTransaction.add(newtx);
     });
@@ -60,7 +65,13 @@ class _MyProfileState extends State<MyProfile>
     _tabController = new TabController(length: 3, vsync: this);
     super.initState();
   }
-
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransaction.removeWhere(
+            (tx) => tx.id == id,
+      );
+    });
+  }
   Widget _editText(double val, String hint) {
     return Flexible(
       child: Padding(
@@ -415,7 +426,12 @@ class _MyProfileState extends State<MyProfile>
                                       ),
                                     ],
                                   ),
-                                   Container(),
+                              Container(
+                                height: MediaQuery.of(context).size.height*1,
+                                child: EducationList(educations:  _userTransaction,
+                                  deleteTx: _deleteTransaction,
+                                ),
+                              ),
                                 ],
                               ),
                             ),
