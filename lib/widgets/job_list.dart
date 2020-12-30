@@ -1,23 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rwtapp/models/Education_model.dart';
-import 'package:flutter_rwtapp/widgets/education_item.dart';
+import 'package:flutter_rwtapp/models/job_model.dart';
+import 'package:flutter_rwtapp/widgets/job_item.dart';
+import 'package:provider/provider.dart';
 
-
-class EducationList extends StatelessWidget {
-  final List<Education> educations;
+class JobList extends StatelessWidget {
+  final List<Job> jobs;
   final Function deleteTx;
 
-  EducationList({this.educations, this.deleteTx});
+  JobList({this.jobs, this.deleteTx});
 
   @override
   Widget build(BuildContext context) {
-    return educations.isEmpty
+    final job=Provider.of<Jobs>(context).items;
+    return job.isEmpty
         ? LayoutBuilder(builder: (ctx, constraints) {
       return Column(
         children: [
           Text(
-            'No Degree added yet!',
+            'No Job added yet!',
             style: Theme.of(context).textTheme.title,
           ),
           const SizedBox(
@@ -35,9 +36,9 @@ class EducationList extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (ctx, index) {
 
-        return EducationItem(education: educations[index], deleteTx: deleteTx);
+        return JobItem(job: job[index], deleteTx: deleteTx);
       },
-      itemCount: educations.length,
+      itemCount: job.length,
     );
   }
 }

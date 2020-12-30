@@ -33,6 +33,7 @@ dependencies:
   flutter_pdfview: ^1.0.4
   path_provider: ^1.2.0
   image_picker: ^0.6.7+14
+  provider:
   intl: ^0.16.1
 dev_dependencies:
   flutter_test:

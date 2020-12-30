@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rwtapp/models/job_model.dart';
 import 'package:flutter_rwtapp/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:flutter_rwtapp/widgets/education_list.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_rwtapp/widgets/job_list.dart';
 import 'package:flutter_rwtapp/models/Education_model.dart';
 import 'package:flutter_rwtapp/widgets/new_education.dart';
+import 'package:flutter_rwtapp/widgets/new_job.dart';
+import 'package:provider/provider.dart';
 
 class MyProfile extends StatefulWidget with NavigationStates {
   @override
@@ -23,23 +26,62 @@ class _MyProfileState extends State<MyProfile>
   }
 
 
-  final List<Education> _userTransaction = [
+  final List<Education> _userEducation = [
     Education(id: DateTime.now().toString(),degreeTitle: 'Matric',startDate:DateTime.now() ,endDate:DateTime.now() ,status:'Completed' ,marks:600 ,instituteName:'Superior College Arifwala' ,gpa: 3),
 
   ];
-  void _startAddNewTransactions(BuildContext ctx) {
+  final List<Job> _userJob = [
+    Job(id: DateTime.now().toString(),description: 'I am working here as a Flutter Developer',companyName:'Trangolabs',designation: 'Software Engineer',salary: 10000.0,startDate:DateTime.now() ,endDate:DateTime.now() ,),
+
+  ];
+  void _startAddNewEducation(BuildContext ctx) {
     showModalBottomSheet(
+      isScrollControlled:true,
       context: ctx,
       builder: (_) {
         return GestureDetector(
           onTap: () {},
-          child: NewEducation(addTx: _addNewTransaction),
+          child: NewEducation(addTx: _addNewEducation),
           behavior: HitTestBehavior.opaque,
         );
       },
     );
   }
-  void _addNewTransaction(
+  void _startAddNewJobs(BuildContext ctx) {
+    showModalBottomSheet(
+      isScrollControlled:true,
+      context: ctx,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: NewJob(addTx: _addNewJob),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
+  void _addNewJob(
+      String degreeTitle, double salary, DateTime startDate, DateTime endDate,String companyName,String designation,String description) {
+    final newtx = Job(
+      id: DateTime.now().toString(),
+      salary: salary,
+      designation: designation,
+      companyName:companyName ,
+      description: description,
+      endDate:endDate ,
+      startDate:startDate ,
+
+    );
+    print(startDate);
+    print(endDate);
+    print('Added Successfully');
+    print(newtx);
+    setState(() {
+          Provider.of<Jobs>(context, listen: false).items.add(newtx);
+    });
+  }
+
+  void _addNewEducation(
       String degreeTitle, double marks, DateTime startDate, DateTime endDate,double gpa,String instituteName,String status) {
     final newtx = Education(
       id: DateTime.now().toString(),
@@ -56,7 +98,7 @@ class _MyProfileState extends State<MyProfile>
     print('Added Successfully');
     print(newtx);
     setState(() {
-      _userTransaction.add(newtx);
+      _userEducation.add(newtx);
     });
   }
 
@@ -65,9 +107,16 @@ class _MyProfileState extends State<MyProfile>
     _tabController = new TabController(length: 3, vsync: this);
     super.initState();
   }
-  void _deleteTransaction(String id) {
+  void _deleteEducation(String id) {
     setState(() {
-      _userTransaction.removeWhere(
+      _userEducation.removeWhere(
+            (tx) => tx.id == id,
+      );
+    });
+  }
+  void _deleteJob(String id) {
+    setState(() {
+      _userJob.removeWhere(
             (tx) => tx.id == id,
       );
     });
@@ -262,13 +311,6 @@ class _MyProfileState extends State<MyProfile>
                                       height: 10,
                                     ),
                                     Row(children: [
-                                      Text('Occupation'),
-                                      _editText(10, 'Enter Occupation'),
-                                    ]),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(children: [
                                       Text('Address'),
                                       Flexible(
                                         child: Padding(
@@ -415,7 +457,7 @@ class _MyProfileState extends State<MyProfile>
                                       FlatButton(
                                         onPressed: () {
                                           addDegree();
-                                          _startAddNewTransactions(context);
+                                          _startAddNewEducation(context);
                                           print('Add Button');
                                         },
                                         child: Icon(
@@ -428,8 +470,8 @@ class _MyProfileState extends State<MyProfile>
                                   ),
                               Container(
                                 height: MediaQuery.of(context).size.height*1,
-                                child: EducationList(educations:  _userTransaction,
-                                  deleteTx: _deleteTransaction,
+                                child: EducationList(educations:  _userEducation,
+                                  deleteTx: _deleteEducation,
                                 ),
                               ),
                                 ],
@@ -440,7 +482,58 @@ class _MyProfileState extends State<MyProfile>
                       ],
                     ),
                   ),
-                  new Text("This is notification Tab View"),
+                  SingleChildScrollView(
+                    physics: NeverScrollableScrollPhysics(),
+                    child: Column(
+                      children: [
+                        new Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Card(
+                            margin: EdgeInsets.all(0),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Add Job/Business',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      FlatButton(
+                                        onPressed: () {
+                                          addDegree();
+                                          _startAddNewJobs(context);
+                                          print('Add Button');
+                                        },
+                                        child: Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                        ),
+                                        color: Color.fromRGBO(39, 99, 209, 10),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    height: MediaQuery.of(context).size.height*1,
+                                    child: JobList(jobs: _userJob,
+                                      deleteTx: _deleteJob,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
                 controller: _tabController,
               ),

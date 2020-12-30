@@ -26,7 +26,6 @@ class _NewEducationState extends State<NewEducation> {
   DateTime _selectedEndDate;
   String dropdownValue = 'Select Status';
 
-  DateTime _selectedDate;
   // Widget _editText(double val, String hint) {
   //   return Flexible(
   //     child: Padding(
@@ -80,14 +79,14 @@ class _NewEducationState extends State<NewEducation> {
       if (_instituteController.text.isEmpty||_degreeTitleController.text.isEmpty) {
         return;
       }
-      if(_selectedStartDate == null||status=='Select Status'|| _selectedStartDate == null){
+      if(_selectedStartDate == null||status=='Select Status'|| _selectedEndDate == null){
         return;
       }
       widget.addTx(
           enteredTitle,
           1.0,
           _selectedStartDate,
-          _selectedStartDate,
+          _selectedEndDate,
           1.0,
           enteredInstitute,
           status
@@ -170,9 +169,11 @@ class _NewEducationState extends State<NewEducation> {
               child: Padding(
                 padding: EdgeInsets.only(left: 20),
                 child: TextField(
+
                   onSubmitted: (_) => _submitData(),
                   controller: _degreeTitleController,
                   keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
                   style: TextStyle(
                     color: Colors.black,
                     fontFamily: "OpenSans",
@@ -201,6 +202,7 @@ class _NewEducationState extends State<NewEducation> {
                   controller: _instituteController,
                   onSubmitted: (_) => _submitData(),
                   keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
                   style: TextStyle(
                     color: Colors.black,
                     fontFamily: "OpenSans",
@@ -298,6 +300,7 @@ class _NewEducationState extends State<NewEducation> {
                     .spaceBetween,
                 children: [
                   AdaptiveFlatButton(
+
                       "Choose Start Date",
                       _startDatePicker),
                   Text(
@@ -339,6 +342,7 @@ class _NewEducationState extends State<NewEducation> {
                 padding: EdgeInsets.only(left: 30),
                 child: TextField(
                   controller: _marksController,
+                  textInputAction: TextInputAction.next,
                   onSubmitted: (_) => _submitData(),
                   keyboardType: TextInputType.number,
                   style: TextStyle(
@@ -367,6 +371,7 @@ class _NewEducationState extends State<NewEducation> {
                         padding: EdgeInsets.only(left: 43),
                         child: TextField(
                           controller: _gpaController,
+                          textInputAction: TextInputAction.next,
                           onSubmitted: (_) => _submitData(),
                           keyboardType: TextInputType.number,
                           style: TextStyle(

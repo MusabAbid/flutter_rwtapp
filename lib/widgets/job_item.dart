@@ -1,23 +1,24 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_rwtapp/models/Education_model.dart';
-import 'package:flutter_rwtapp/widgets/new_education.dart';
+import 'package:flutter_rwtapp/models/job_model.dart';
+import 'package:flutter_rwtapp/widgets/new_job.dart';
+import 'package:provider/provider.dart';
 
-class EducationItem extends StatefulWidget {
-  const EducationItem({
+class JobItem extends StatefulWidget {
+  const JobItem({
     Key key,
-    @required this.education,
+    @required this.job,
     @required this.deleteTx,
   }) : super(key: key);
 
-  final Education education;
+  final Job job;
   final Function deleteTx;
 
   @override
-  _EducationItemState createState() => _EducationItemState();
+  _JobItemState createState() => _JobItemState();
 }
 
-class _EducationItemState extends State<EducationItem> {
+class _JobItemState extends State<JobItem> {
   Color _bdColor;
 
   @override
@@ -35,11 +36,11 @@ class _EducationItemState extends State<EducationItem> {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-        key: ValueKey(widget.education.id),
-        secondaryBackground: Container(
+        key: ValueKey(widget.job.id),
+        secondaryBackground:  Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
-            color: Theme.of(context).errorColor,
+            color:Theme.of(context).errorColor,
           ),
           child: Icon(
             Icons.delete,
@@ -71,7 +72,7 @@ class _EducationItemState extends State<EducationItem> {
               context: context,
               builder: (ctx) => AlertDialog(
                 title: Text('Are you sure?'),
-                content: Text("Do you want to remove the Degree?"),
+                content: Text("Do you want to remove the Job?"),
                 actions: [
                   FlatButton(
                     onPressed: () {
@@ -96,7 +97,7 @@ class _EducationItemState extends State<EducationItem> {
               builder: (_) {
                 return GestureDetector(
                   onTap: () {},
-                  child: NewEducation(),
+                  child: NewJob(),
                   behavior: HitTestBehavior.opaque,
                 );
               },
@@ -104,7 +105,8 @@ class _EducationItemState extends State<EducationItem> {
           }
         },
         onDismissed: (direction) {
-          widget.deleteTx(widget.education.id);
+          // widget.deleteTx(widget.job.id);
+          Provider.of<Jobs>(context, listen: false).deleteJobs(widget.job.id);
         },
         child: Card(
           elevation: 3,
@@ -119,13 +121,13 @@ class _EducationItemState extends State<EducationItem> {
                 padding: const EdgeInsets.all(6.0),
                 child: FittedBox(
                     child: Text(
-                  "${widget.education.marks}",
+                  "${widget.job.salary}",
                   style: TextStyle(color: Colors.white),
                 )),
               ),
             ),
             title: Text(
-              widget.education.degreeTitle,
+              widget.job.designation,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -134,21 +136,21 @@ class _EducationItemState extends State<EducationItem> {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.education.status),
-                Text(widget.education.instituteName),
+                Text(widget.job.designation),
+                Text(widget.job.companyName),
               ],
             ),
             trailing: MediaQuery.of(context).size.width > 400
                 ? FlatButton.icon(
                     textColor: Theme.of(context).errorColor,
-                    onPressed: () => widget.deleteTx(widget.education.id),
+                    onPressed: () => widget.deleteTx(widget.job.id),
                     icon: const Icon(Icons.delete),
                     label: const Text('Delete'),
                   )
                 : IconButton(
                     icon: const Icon(Icons.delete),
                     color: Theme.of(context).errorColor,
-                    onPressed: () => widget.deleteTx(widget.education.id),
+                    onPressed: () => widget.deleteTx(widget.job.id),
                   ),
           ),
         ));
