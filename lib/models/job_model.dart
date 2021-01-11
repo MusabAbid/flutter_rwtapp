@@ -22,8 +22,8 @@ class Job{
 }
 class Jobs with ChangeNotifier{
   List<Job> _items=[
-    Job(id: DateTime.now().toString(),description: 'I am working here as a Flutter Developer',companyName:'Trangolabs',designation: 'Software Engineer',salary: 10000.0,startDate:DateTime.now() ,endDate:DateTime.now() ,),
-    Job(id: DateTime.now().toString(),description: 'I am working here as a Flutter Developer',companyName:'Trangolabs',designation: 'Software Engineer',salary: 10000.0,startDate:DateTime.now() ,endDate:DateTime.now() ,),
+    Job(id: DateTime.now().toString(),endDate: DateTime.now(),startDate:DateTime.now() ,description:'jdjdjjd',companyName: 'ndndndn',designation:'jddjdjjd' ,salary: 2000),
+    Job(id: DateTime.now().toString(),endDate: DateTime.now(),startDate:DateTime.now() ,description:'jdjdjjd',companyName: 'Abc',designation:'jddjdjjd' ,salary: 2000)
   ];
   List<Job> get items {
     return [..._items];
@@ -65,6 +65,34 @@ class Jobs with ChangeNotifier{
     // }
     existingProduct = null;
   }
-
+  Future<void> addJob(Job job) async {
+    // const url = 'https://flutter-update-47933.firebaseio.com/products.json';
+    try {
+      // final response = await http.post(
+      //   url,
+      //   body: json.encode({
+      //     'title': product.title,
+      //     'description': product.description,
+      //     'imageUrl': product.imageUrl,
+      //     'price': product.price,
+      //     'isFavorite': product.isFavorite,
+      //   }),
+      // );
+      final newJob = Job(
+        id: DateTime.now().toString(),
+        salary:job.salary,
+        description: job.description,
+        designation: job.designation,
+        companyName:job.companyName ,
+        endDate:job.endDate ,
+        startDate: job.startDate,
+      );
+      _items.add(newJob);
+      notifyListeners();
+    } catch (error) {
+      print(error);
+      throw error;
+    }
+  }
 
 }

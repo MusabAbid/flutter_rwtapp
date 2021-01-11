@@ -282,7 +282,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 5,),
+                      SizedBox(height: 15,),
                       _buildLogInBtn(),
                     ],
 

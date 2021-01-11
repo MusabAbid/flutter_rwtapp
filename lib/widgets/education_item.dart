@@ -2,35 +2,34 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_rwtapp/models/Education_model.dart';
 import 'package:flutter_rwtapp/widgets/new_education.dart';
-
+import 'package:provider/provider.dart';
 class EducationItem extends StatefulWidget {
   const EducationItem({
     Key key,
     @required this.education,
-    @required this.deleteTx,
   }) : super(key: key);
 
   final Education education;
-  final Function deleteTx;
+
 
   @override
   _EducationItemState createState() => _EducationItemState();
 }
 
 class _EducationItemState extends State<EducationItem> {
-  Color _bdColor;
-
-  @override
-  void initState() {
-    const availableColors = [
-      Colors.red,
-      Colors.blue,
-      Colors.black,
-      Colors.purple
-    ];
-    _bdColor = availableColors[Random().nextInt(4)];
-    super.initState();
-  }
+  // Color _bdColor;
+  //
+  // @override
+  // void initState() {
+  //   const availableColors = [
+  //     Colors.red,
+  //     Colors.blue,
+  //     Colors.black,
+  //     Colors.purple
+  //   ];
+  //   _bdColor = availableColors[Random().nextInt(4)];
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +95,7 @@ class _EducationItemState extends State<EducationItem> {
               builder: (_) {
                 return GestureDetector(
                   onTap: () {},
-                  child: NewEducation(),
+                  child: NewEducation(id: widget.education.id,),
                   behavior: HitTestBehavior.opaque,
                 );
               },
@@ -104,7 +103,7 @@ class _EducationItemState extends State<EducationItem> {
           }
         },
         onDismissed: (direction) {
-          widget.deleteTx(widget.education.id);
+          Provider.of<Educations>(context, listen: false).deleteEducations(widget.education.id);
         },
         child: Card(
           elevation: 3,
@@ -138,18 +137,7 @@ class _EducationItemState extends State<EducationItem> {
                 Text(widget.education.instituteName),
               ],
             ),
-            trailing: MediaQuery.of(context).size.width > 400
-                ? FlatButton.icon(
-                    textColor: Theme.of(context).errorColor,
-                    onPressed: () => widget.deleteTx(widget.education.id),
-                    icon: const Icon(Icons.delete),
-                    label: const Text('Delete'),
-                  )
-                : IconButton(
-                    icon: const Icon(Icons.delete),
-                    color: Theme.of(context).errorColor,
-                    onPressed: () => widget.deleteTx(widget.education.id),
-                  ),
+
           ),
         ));
   }

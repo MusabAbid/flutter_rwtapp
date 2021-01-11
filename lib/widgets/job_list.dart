@@ -5,10 +5,7 @@ import 'package:flutter_rwtapp/widgets/job_item.dart';
 import 'package:provider/provider.dart';
 
 class JobList extends StatelessWidget {
-  final List<Job> jobs;
-  final Function deleteTx;
 
-  JobList({this.jobs, this.deleteTx});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +33,7 @@ class JobList extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (ctx, index) {
 
-        return JobItem(job: job[index], deleteTx: deleteTx);
+        return JobItem(job: job[index],);
       },
       itemCount: job.length,
     );

@@ -2,16 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rwtapp/models/Education_model.dart';
 import 'package:flutter_rwtapp/widgets/education_item.dart';
-
+import 'package:provider/provider.dart';
 
 class EducationList extends StatelessWidget {
-  final List<Education> educations;
-  final Function deleteTx;
-
-  EducationList({this.educations, this.deleteTx});
 
   @override
   Widget build(BuildContext context) {
+    final educations=Provider.of<Educations>(context).items;
     return educations.isEmpty
         ? LayoutBuilder(builder: (ctx, constraints) {
       return Column(
@@ -35,7 +32,7 @@ class EducationList extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (ctx, index) {
 
-        return EducationItem(education: educations[index], deleteTx: deleteTx);
+        return EducationItem(education: educations[index]);
       },
       itemCount: educations.length,
     );

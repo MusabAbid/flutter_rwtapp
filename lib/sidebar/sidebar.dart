@@ -20,7 +20,7 @@ class _SideBarState extends State<SideBar>
   Stream<bool> isSidebarOpenedStream;
   StreamSink<bool> isSidebarOpenedSink;
 
-  final _animationDuration = const Duration(milliseconds: 500);
+  final _animationDuration = const Duration(milliseconds: 200);
 
   @override
   void initState() {
@@ -204,7 +204,7 @@ class _SideBarState extends State<SideBar>
                             title: "Take Donations",
                             onTap: (){
                               onIconPressed();
-                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyDonationClickedEvent);
+                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.TakeDonationClickedEvent);
                             },
                           ),
                           MenuItem(
@@ -212,15 +212,15 @@ class _SideBarState extends State<SideBar>
                             title: "Make Payment",
                             onTap: (){
                               onIconPressed();
-                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyDonationClickedEvent);
+                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MakePaymentClickedEvent);
                             },
                           ),
                           MenuItem(
                             icon: Icons.card_giftcard_outlined,
-                            title: "Beneficial",
+                            title: "Beneficiary",
                             onTap: (){
                               onIconPressed();
-                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyDonationClickedEvent);
+                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.BeneficialClickedEvent);
                             },
                           ),
                           MenuItem(
@@ -228,7 +228,7 @@ class _SideBarState extends State<SideBar>
                             title: "Projects",
                             onTap: (){
                               onIconPressed();
-                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyDonationClickedEvent);
+                              BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.ProjectsClickedEvent);
                             },
                           ),
                           Divider(

@@ -8,11 +8,11 @@ class JobItem extends StatefulWidget {
   const JobItem({
     Key key,
     @required this.job,
-    @required this.deleteTx,
+
   }) : super(key: key);
 
   final Job job;
-  final Function deleteTx;
+
 
   @override
   _JobItemState createState() => _JobItemState();
@@ -97,7 +97,7 @@ class _JobItemState extends State<JobItem> {
               builder: (_) {
                 return GestureDetector(
                   onTap: () {},
-                  child: NewJob(),
+                  child: NewJob(id: widget.job.id),
                   behavior: HitTestBehavior.opaque,
                 );
               },
@@ -140,18 +140,6 @@ class _JobItemState extends State<JobItem> {
                 Text(widget.job.companyName),
               ],
             ),
-            trailing: MediaQuery.of(context).size.width > 400
-                ? FlatButton.icon(
-                    textColor: Theme.of(context).errorColor,
-                    onPressed: () => widget.deleteTx(widget.job.id),
-                    icon: const Icon(Icons.delete),
-                    label: const Text('Delete'),
-                  )
-                : IconButton(
-                    icon: const Icon(Icons.delete),
-                    color: Theme.of(context).errorColor,
-                    onPressed: () => widget.deleteTx(widget.job.id),
-                  ),
           ),
         ));
   }

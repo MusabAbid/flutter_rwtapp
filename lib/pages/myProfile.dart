@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rwtapp/models/job_model.dart';
 import 'package:flutter_rwtapp/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:flutter_rwtapp/widgets/education_list.dart';
 import 'package:flutter_rwtapp/widgets/job_list.dart';
 import 'package:flutter_rwtapp/models/Education_model.dart';
 import 'package:flutter_rwtapp/widgets/new_education.dart';
 import 'package:flutter_rwtapp/widgets/new_job.dart';
-import 'package:provider/provider.dart';
 
 class MyProfile extends StatefulWidget with NavigationStates {
   @override
@@ -30,10 +28,7 @@ class _MyProfileState extends State<MyProfile>
     Education(id: DateTime.now().toString(),degreeTitle: 'Matric',startDate:DateTime.now() ,endDate:DateTime.now() ,status:'Completed' ,marks:600 ,instituteName:'Superior College Arifwala' ,gpa: 3),
 
   ];
-  final List<Job> _userJob = [
-    Job(id: DateTime.now().toString(),description: 'I am working here as a Flutter Developer',companyName:'Trangolabs',designation: 'Software Engineer',salary: 10000.0,startDate:DateTime.now() ,endDate:DateTime.now() ,),
 
-  ];
   void _startAddNewEducation(BuildContext ctx) {
     showModalBottomSheet(
       isScrollControlled:true,
@@ -41,7 +36,7 @@ class _MyProfileState extends State<MyProfile>
       builder: (_) {
         return GestureDetector(
           onTap: () {},
-          child: NewEducation(addTx: _addNewEducation),
+          child: NewEducation(),
           behavior: HitTestBehavior.opaque,
         );
       },
@@ -54,73 +49,57 @@ class _MyProfileState extends State<MyProfile>
       builder: (_) {
         return GestureDetector(
           onTap: () {},
-          child: NewJob(addTx: _addNewJob),
+          child: NewJob(),
           behavior: HitTestBehavior.opaque,
         );
       },
     );
   }
-  void _addNewJob(
-      String degreeTitle, double salary, DateTime startDate, DateTime endDate,String companyName,String designation,String description) {
-    final newtx = Job(
-      id: DateTime.now().toString(),
-      salary: salary,
-      designation: designation,
-      companyName:companyName ,
-      description: description,
-      endDate:endDate ,
-      startDate:startDate ,
+  // void _addNewJob(
+  //     String degreeTitle, double salary, DateTime startDate, DateTime endDate,String companyName,String designation,String description) {
+  //   final newtx = Job(
+  //     id: DateTime.now().toString(),
+  //     salary: salary,
+  //     designation: designation,
+  //     companyName:companyName ,
+  //     description: description,
+  //     endDate:endDate ,
+  //     startDate:startDate ,
+  //   );
+  //   print(startDate);
+  //   print(endDate);
+  //   print('Added Successfully');
+  //   print(newtx);
+  //         Provider.of<Jobs>(context, listen: false).items.add(newtx);
+  // }
 
-    );
-    print(startDate);
-    print(endDate);
-    print('Added Successfully');
-    print(newtx);
-    setState(() {
-          Provider.of<Jobs>(context, listen: false).items.add(newtx);
-    });
-  }
-
-  void _addNewEducation(
-      String degreeTitle, double marks, DateTime startDate, DateTime endDate,double gpa,String instituteName,String status) {
-    final newtx = Education(
-      id: DateTime.now().toString(),
-    degreeTitle:degreeTitle ,
-      endDate:endDate ,
-      gpa: gpa,
-      instituteName: instituteName,
-      marks:marks ,
-      startDate:startDate ,
-      status: status,
-    );
-    print(startDate);
-    print(endDate);
-    print('Added Successfully');
-    print(newtx);
-    setState(() {
-      _userEducation.add(newtx);
-    });
-  }
+  // void _addNewEducation(
+  //     String degreeTitle, double marks, DateTime startDate, DateTime endDate,double gpa,String instituteName,String status) {
+  //   final newtx = Education(
+  //     id: DateTime.now().toString(),
+  //   degreeTitle:degreeTitle ,
+  //     endDate:endDate ,
+  //     gpa: gpa,
+  //     instituteName: instituteName,
+  //     marks:marks ,
+  //     startDate:startDate ,
+  //     status: status,
+  //   );
+  //   print(startDate);
+  //   print(endDate);
+  //   print('Added Successfully');
+  //   print(newtx);
+  //   setState(() {
+  //     _userEducation.add(newtx);
+  //   });
+  // }
 
   @override
   void initState() {
     _tabController = new TabController(length: 3, vsync: this);
     super.initState();
   }
-  void _deleteEducation(String id) {
-    setState(() {
-      _userEducation.removeWhere(
-            (tx) => tx.id == id,
-      );
-    });
-  }
-  void _deleteJob(String id) {
-    setState(() {
-      _userJob.removeWhere(
-            (tx) => tx.id == id,
-      );
-    });
-  }
+
   Widget _editText(double val, String hint) {
     return Flexible(
       child: Padding(
@@ -159,7 +138,7 @@ class _MyProfileState extends State<MyProfile>
               ),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 6),
                 child: Text(
                   'Save',
                   style: TextStyle(
@@ -470,8 +449,7 @@ class _MyProfileState extends State<MyProfile>
                                   ),
                               Container(
                                 height: MediaQuery.of(context).size.height*1,
-                                child: EducationList(educations:  _userEducation,
-                                  deleteTx: _deleteEducation,
+                                child: EducationList(
                                 ),
                               ),
                                 ],
@@ -522,8 +500,7 @@ class _MyProfileState extends State<MyProfile>
                                   ),
                                   Container(
                                     height: MediaQuery.of(context).size.height*1,
-                                    child: JobList(jobs: _userJob,
-                                      deleteTx: _deleteJob,
+                                    child: JobList(
                                     ),
                                   ),
                                 ],

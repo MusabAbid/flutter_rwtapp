@@ -268,7 +268,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 5,),
+                      SizedBox(height: 15,),
                       _buildSignUpBtn(),
                     ],
                   ),

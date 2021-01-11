@@ -1,14 +1,16 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_rwtapp/pages/make_payment.dart';
 import 'package:flutter_rwtapp/pages/memberRegisteration.dart';
 import 'package:flutter_rwtapp/pages/myDonation.dart';
 import 'package:flutter_rwtapp/pages/myProfile.dart';
+import 'package:flutter_rwtapp/pages/project.dart';
 import 'package:flutter_rwtapp/pages/rulesRegulations.dart';
 import 'package:flutter_rwtapp/screens/Home.dart';
 import 'package:flutter_rwtapp/pages/add_new_campaign.dart';
 import 'package:flutter_rwtapp/pages/add_new_news.dart';
 import 'package:flutter_rwtapp/pages/paymentHistory.dart';
-
-
+import 'package:flutter_rwtapp/pages/beneficial.dart';
+import 'package:flutter_rwtapp/pages/take_donation.dart';
 enum NavigationEvents {
   HomePageClickedEvent,
   MyProfileClickedEvent,
@@ -18,7 +20,10 @@ enum NavigationEvents {
   AddNewCampaignClickedEvent,
   AddNewNewsClickedEvent,
   PaymentHistoryClickedEvent,
-
+  BeneficialClickedEvent,
+  TakeDonationClickedEvent,
+  MakePaymentClickedEvent,
+  ProjectsClickedEvent,
 }
 
 abstract class NavigationStates {}
@@ -54,7 +59,18 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
       case NavigationEvents.PaymentHistoryClickedEvent:
         yield PaymentHistoryPage();
         break;
-
+      case NavigationEvents.BeneficialClickedEvent:
+        yield Beneficial();
+        break;
+      case NavigationEvents.TakeDonationClickedEvent:
+        yield TakeDonations();
+        break;
+      case NavigationEvents.ProjectsClickedEvent:
+        yield Project();
+        break;
+      case NavigationEvents.MakePaymentClickedEvent:
+        yield MakePayment();
+        break;
 
     }
   }
