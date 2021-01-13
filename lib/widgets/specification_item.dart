@@ -5,9 +5,9 @@ import 'package:flutter_rwtapp/models/specification_list.dart';
 import 'package:provider/provider.dart';
 
 class SpecsItem extends StatelessWidget {
-  final SpecificationList specList;
-
-  SpecsItem(this.specList);
+  SpecificationList specList;
+ Function spec;
+  SpecsItem(this.specList,this.spec);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,8 @@ class SpecsItem extends StatelessWidget {
           ),),
           trailing: InkWell(
               onTap: () {
-                Provider.of<Specification>(context).rem(specList);
+
+                spec(specList);
               },
               child: Icon(
                 Icons.delete,

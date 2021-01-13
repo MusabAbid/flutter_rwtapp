@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rwtapp/screens/new_project.dart';
 import 'package:flutter_rwtapp/bloc/navigation_bloc/navigation_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_rwtapp/models/project_model.dart';
 class Project extends StatefulWidget with NavigationStates {
   @override
   _ProjectState createState() => _ProjectState();
@@ -15,6 +17,7 @@ class _ProjectState extends State<Project> with SingleTickerProviderStateMixin {
   }
   @override
   Widget build(BuildContext context) {
+    List<ProjectList> project=Provider.of<Projects>(context).items;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
@@ -26,7 +29,9 @@ class _ProjectState extends State<Project> with SingleTickerProviderStateMixin {
             child: IconButton(
               onPressed:(){
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => NewProject()));
+                    .push(MaterialPageRoute(builder: (context) => NewProject(
+                  id: null,
+                )));
               } ,
               icon: Icon(Icons.add_box_rounded),
               iconSize: 25,
@@ -79,99 +84,76 @@ class _ProjectState extends State<Project> with SingleTickerProviderStateMixin {
                     // physics: NeverScrollableScrollPhysics(),
                     child: Column(
                       children: [
-                        // Container(
-                        //   height: MediaQuery.of(context).size.height * 1,
-                        //   child: ListView.builder(
-                        //     physics: NeverScrollableScrollPhysics(),
-                        //     shrinkWrap: true,
-                        //     itemCount: FilterItem.length,
-                        //     itemBuilder: (context, index) {
-                        //       return GestureDetector(
-                        //         onTap: () {
-                        //           Navigator.of(context).push(
-                        //             MaterialPageRoute(
-                        //               builder: (context) => NewTakeDonation(
-                        //                 item: FilterItem[index],
-                        //
-                        //                 // destination: destination,
-                        //               ),
-                        //             ),
-                        //           );
-                        //         },
-                        //         child: Padding(
-                        //           padding: const EdgeInsets.all(10.0),
-                        //           child: Card(
-                        //             margin: EdgeInsets.all(0),
-                        //             elevation: 2,
-                        //             child: Row(
-                        //               crossAxisAlignment:
-                        //               CrossAxisAlignment.center,
-                        //               children: [
-                        //                 Container(
-                        //                     height: 120,
-                        //                     width: 120,
-                        //                     decoration: BoxDecoration(
-                        //                       borderRadius:
-                        //                       BorderRadius.circular(3),
-                        //                     ),
-                        //                     child: ClipRRect(
-                        //                         borderRadius: BorderRadius.only(
-                        //                             topLeft: Radius.circular(3),
-                        //                             bottomLeft:
-                        //                             Radius.circular(3)),
-                        //                         child: Image.network(
-                        //                           FilterItem[index].image,
-                        //                           fit: BoxFit.cover,
-                        //                         ))),
-                        //                 Expanded(
-                        //                   child: Padding(
-                        //                     padding: const EdgeInsets.only(
-                        //                         left: 8.0),
-                        //                     child: Column(
-                        //                       mainAxisAlignment:
-                        //                       MainAxisAlignment
-                        //                           .spaceBetween,
-                        //                       crossAxisAlignment:
-                        //                       CrossAxisAlignment.start,
-                        //                       children: [
-                        //                         Text(
-                        //                           FilterItem[index].name,
-                        //                           style: TextStyle(
-                        //                             fontWeight: FontWeight.bold,
-                        //                             fontSize: 20,
-                        //                           ),
-                        //                         ),
-                        //                         SizedBox(
-                        //                           height: 5,
-                        //                         ),
-                        //                         Text(
-                        //                             'Father: ${FilterItem[index].fName}'),
-                        //                         SizedBox(
-                        //                           height: 5,
-                        //                         ),
-                        //                         Text(
-                        //                             'Role: ${FilterItem[index].role}'),
-                        //                         SizedBox(
-                        //                           height: 5,
-                        //                         ),
-                        //                         Text(
-                        //                             'City: ${FilterItem[index].city}'),
-                        //                       ],
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //                 Icon(
-                        //                   Icons.chevron_right,
-                        //                   size: 40,
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       );
-                        //     },
-                        //   ),
-                        // ),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 1,
+                          child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: project.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context)
+                                      .push(MaterialPageRoute(builder: (context) => NewProject(
+                                    id: project[index].id,
+                                  )));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Card(
+                                    margin: EdgeInsets.all(0),
+                                    elevation: 2,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceBetween,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                              children: [
+                                                Text(
+                                                  '${project[index].projectTitle}',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Text(
+                                                    'Lead By: ${project[index].projectLead}'),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Text(
+                                                    'Description: ${project[index].description}'),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.chevron_right,
+                                          size: 40,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),

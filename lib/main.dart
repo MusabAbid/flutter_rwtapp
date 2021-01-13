@@ -6,6 +6,7 @@ import 'package:flutter_rwtapp/models/take_donation.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_rwtapp/models/specification_list.dart';
 import 'package:flutter_rwtapp/models/past_TakeDonation_model.dart';
+import 'package:flutter_rwtapp/models/project_model.dart';
 void main() => runApp(MyApp());
 Map<int, Color> color = {
   50: Color.fromRGBO(136, 14, 79, .1),
@@ -41,6 +42,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider(
             create: (ctx) => Specification(),
+          ),
+          ChangeNotifierProvider(
+            create: (ctx) => Projects(),
           ),
     ],
     child: MaterialApp(
